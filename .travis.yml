@@ -1,5 +1,7 @@
 sudo: required
 
+dist: bionic
+
 script:
   - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
   - gcc --version
@@ -19,8 +21,6 @@ jdk:
 
 env:
   global:
-    - DEFOLD_AUTH=foobar
-    - DEFOLD_USER=bjorn.ritzl@gmail.com
     - DEFOLD_BOOSTRAP_COLLECTION=/test/test.collectionc
 
 script:

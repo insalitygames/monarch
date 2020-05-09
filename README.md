@@ -1,6 +1,6 @@
 ![](docs/logo.jpg)
 
-[![Build Status](https://travis-ci.org/britzl/monarch.svg?branch=master)](https://travis-ci.org/britzl/monarch)
+[![Build Status](https://travis-ci.com/britzl/monarch.svg?branch=master)](https://travis-ci.org/britzl/monarch)
 [![Code Coverage](https://codecov.io/gh/britzl/monarch/branch/master/graph/badge.svg)](https://codecov.io/gh/britzl/monarch)
 [![Latest Release](https://img.shields.io/github/release/britzl/monarch.svg)](https://github.com/britzl/monarch/releases)
 
@@ -19,6 +19,10 @@ Or point to the ZIP file of a [specific release](https://github.com/britzl/monar
 # Usage
 Using Monarch requires that screens are created in a certain way. Once you have one or more screens created you can start navigating between the screens.
 
+## Editor Script
+Right click in on a`.gui` file in the outline and selected the menu item, it creates a `.collection` and a `.gui_script` with the same name as the `.gui` file. It adds the file with some basic setup done to them, adding the selected gui script to the created gui scene and in turns adds the gui scene to the newly created collection.
+
+<img src="/docs/editor_script.gif" width="200px">
 
 ## Creating screens
 Monarch screens are created in individual collections and either loaded through collection proxies or created through collection factories.
@@ -73,12 +77,12 @@ The navigation in Monarch is based around a stack of screens. When a screen is s
 ### Showing a new screen
 You show a screen in one of two ways:
 
-1. Post a ```show``` message to the ```screen.script```
+1. Post a ```show``` message to the screen script (either `screen_proxy.script` or `screen_factory.script`)
 2. Call ```monarch.show()``` (see below)
 
 Showing a screen will push it to the top of the stack and trigger an optional transition. The previous screen will be hidden (with an optional transition) unless the screen to be shown is a [popup](#popups).
 
-NOTE: You must ensure that the ```init()``` function of the ```screen.script``` has run. The ```init()``` function is responsible for registering the screen and it's not possible to show it until this has happened. A good practice is to delay the first call by posting a message to a controller script or similar before calling ```monarch.show()``` the first time:
+NOTE: You must ensure that the ```init()``` function of the screen script (either `screen_proxy.script` or `screen_factory.script`) has run. The ```init()``` function is responsible for registering the screen and it's not possible to show it until this has happened. A good practice is to delay the first call by posting a message to a controller script or similar before calling ```monarch.show()``` the first time:
 
 	function init(self)
 		msg.post("#", "show_first_screen")
@@ -113,7 +117,7 @@ Monarch can also show a screen without adding it to the stack. This can be used 
 ### Going back to a previous screen
 You navigate back in the screen hierarchy in one of two ways:
 
-1. Post a ```back``` message to the ```screen.script```
+1. Post a ```back``` message to the screen script (either `screen_proxy.script` or `screen_factory.script`)
 2. Call ```monarch.back()``` (see below)
 
 
@@ -301,7 +305,7 @@ Both the ```monarch.show()``` and ```monarch.back()``` functions take an optiona
 ## Monarch API
 
 ### monarch.show(screen_id, [options], [data], [callback])
-Show a Monarch screen. Note that the screen must be registered before it can be shown. The ```init()``` function of the ```screen.script``` takes care of registration. This operation will be added to the queue if Monarch is busy.
+Show a Monarch screen. Note that the screen must be registered before it can be shown. The ```init()``` function of the screen script (either `screen_proxy.script` or `screen_factory.script`) takes care of registration. This operation will be added to the queue if Monarch is busy.
 
 **PARAMETERS**
 * ```screen_id``` (string|hash) - Id of the screen to show.
